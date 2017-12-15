@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { Button, Checkbox, Form } from 'semantic-ui-react'
+
 export default class Tracker extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired, // this is passed from the Rails view
@@ -17,29 +19,15 @@ export default class Tracker extends React.Component {
     this.state = { name: this.props.name };
   }
 
-  updateName = (name) => {
-    this.setState({ name });
-  };
-
   render() {
     return (
-      <div>
-        <h3>
-          Hello, {this.state.name}!
-        </h3>
-        <hr />
-        <form >
-          <label htmlFor="name">
-            Say hello to:
-          </label>
-          <input
-            id="name"
-            type="text"
-            value={this.state.name}
-            onChange={(e) => this.updateName(e.target.value)}
-          />
-        </form>
-      </div>
+        <Form className="search">
+          <Form.Field>
+            <label>Booking Number</label>
+            <input placeholder='Booking Number' />
+          </Form.Field>
+          <Button type='submit'>Search</Button>
+        </Form>
     );
   }
 }
