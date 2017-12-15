@@ -16,15 +16,21 @@ export default class Tracker extends React.Component {
 
     // How to set initial state in ES6 class syntax
     // https://facebook.github.io/react/docs/reusable-components.html#es6-classes
-    this.state = { name: this.props.name };
+    this.state = { bookingNumber: '' };
   }
+
+  handleChange = (e, { name, value }) => this.setState({ [name]: value });
+
+  handleSubmit = () => {
+    const bookingNumber = this.state.bookingNumber
+  };
 
   render() {
     return (
-        <Form className="search">
+        <Form className="search" onSubmit={this.handleSubmit}>
           <Form.Field>
             <label>Booking Number</label>
-            <input placeholder='Booking Number' />
+            <input placeholder='Booking Number' onChange={this.handleChange}/>
           </Form.Field>
           <Button type='submit'>Search</Button>
         </Form>
