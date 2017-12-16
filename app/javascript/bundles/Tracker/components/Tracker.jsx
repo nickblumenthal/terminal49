@@ -19,10 +19,13 @@ export default class Tracker extends React.Component {
     this.state = { bookingNumber: '' };
   }
 
-  handleChange = (e, { name, value }) => this.setState({ [name]: value });
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
   handleSubmit = () => {
-    const bookingNumber = this.state.bookingNumber
+    const bookingNumber = this.state.bookingNumber;
+    this.props.fetchBooking(bookingNumber);
   };
 
   render() {
@@ -30,7 +33,7 @@ export default class Tracker extends React.Component {
         <Form className="search" onSubmit={this.handleSubmit}>
           <Form.Field>
             <label>Booking Number</label>
-            <input placeholder='Booking Number' onChange={this.handleChange}/>
+            <input placeholder='Booking Number' name="bookingNumber" onChange={this.handleChange}/>
           </Form.Field>
           <Button type='submit'>Search</Button>
         </Form>

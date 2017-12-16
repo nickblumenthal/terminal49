@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { HELLO_WORLD_NAME_UPDATE } from '../constants/trackerConstants';
+import bookingReducer from './bookingReducer'
 
 const name = (state = '', action) => {
   switch (action.type) {
@@ -10,6 +11,6 @@ const name = (state = '', action) => {
   }
 };
 
-const TrackerReducer = combineReducers({ name });
+const TrackerReducer = combineReducers({ name, bookingReducer });
 
 export default TrackerReducer;
