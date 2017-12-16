@@ -1,4 +1,4 @@
-module Lines::PIL
+class Lines::PIL < Lines::Base
   @@api_url = 'https://www.pilship.com/api'
 
   def fetch(bl_id)
