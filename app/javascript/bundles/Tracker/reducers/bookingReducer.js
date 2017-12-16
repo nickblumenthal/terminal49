@@ -3,7 +3,8 @@ import Immutable from 'immutable';
 import Booking from '../constants/bookingConstants';
 
 const initialState = Immutable.fromJS({
-  isFetching: false
+  isFetching: false,
+  bookings: {}
 });
 
 
@@ -14,9 +15,9 @@ export default function bookings(state = initialState, action = {}) {
         isFetching: action.data.bookingId
       });
     case (Booking.RECEIVE_BOOKING):
-      return state.merge({
+      return state.mergeDeep({
         isFetching: false,
-        [action.data.bookingId]: action.data.bookingData
+        bookings: { [action.data.bookingId]: action.data.bookingData }
       });
     default:
       return state;

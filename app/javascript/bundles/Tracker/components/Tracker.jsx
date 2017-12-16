@@ -2,15 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { Button, Checkbox, Form } from 'semantic-ui-react'
+import BookingSearchResults from './BookingSearchResults'
 
 export default class Tracker extends React.Component {
   static propTypes = {
-    name: PropTypes.string.isRequired, // this is passed from the Rails view
+    bookings: PropTypes.object
   };
-
-  /**
-   * @param props - Comes from your rails view.
-   */
+  
   constructor(props) {
     super(props);
 
@@ -29,14 +27,15 @@ export default class Tracker extends React.Component {
   };
 
   render() {
-    return (
+    return [
         <Form className="search" onSubmit={this.handleSubmit}>
           <Form.Field>
             <label>Booking Number</label>
             <input placeholder='Booking Number' name="bookingNumber" onChange={this.handleChange}/>
           </Form.Field>
           <Button type='submit'>Search</Button>
-        </Form>
-    );
+        </Form>,
+        <BookingSearchResults bookings={this.props.bookings} />
+    ];
   }
 }
