@@ -4,7 +4,7 @@ import Booking from '../constants/bookingConstants'
 export function fetchBooking(bookingId) {
   return function(dispatch) {
     dispatch(requestBooking(bookingId));
-    fetch(`/bookings/${bookingId}`)
+    fetch(`/bookings/${bookingId}`, {headers: {'Accept': 'application/json'}})
         .then((response) => response.json())
         .then((data) => dispatch(receiveBooking(bookingId, data)))
   }
