@@ -6,26 +6,28 @@ const ShippingDetails = ({booking}) => {
   const renderCards = (booking) => {
     return (
         <Card fluid color="red">
-          <Card.Header textAlign="center">
-            <Header as="h2">Booking Detail</Header>
-          </Card.Header>
+          <Card.Content>
+            <Card.Header textAlign="center">
+              <Header as="h2">Booking Detail</Header>
+            </Card.Header>
+          </Card.Content>
           <Card.Content>
             <Grid columns={4} divided stackable>
               <Grid.Row>
                 <Grid.Column>
-                  <Header as="h2">B/L Number</Header>
+                  <Header as="h3">B/L Number</Header>
                   {booking.get('booking_number')}
                 </Grid.Column>
                 <Grid.Column>
-                  <Header as="h2">Steamship Line</Header>
+                  <Header as="h3">Steamship Line</Header>
                   {booking.get('steamship_line')}
                 </Grid.Column>
                 <Grid.Column>
-                  <Header as="h2">Origin</Header>
+                  <Header as="h3">Origin</Header>
                   {booking.get('origin')}
                 </Grid.Column>
                 <Grid.Column>
-                  <Header as="h2">Destination</Header>
+                  <Header as="h3">Destination</Header>
                   {booking.get('destination')}
                 </Grid.Column>
               </Grid.Row>
