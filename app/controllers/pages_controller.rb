@@ -12,7 +12,6 @@ class PagesController < ApplicationController
   private
 
   def hydrate_store
-    props = {}
-    redux_store("trackerStore", props: {name: 'test'})
+    redux_store("trackerStore", props: {})
   end
 end
