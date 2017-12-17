@@ -7,18 +7,66 @@ export default class ContainerDetails extends Component {
     super(props);
 
     this.state = {
-      historyVisible: false
+      historyVisible: {}
     };
   }
 
-  handleClick = () => {
-    this.setState(prevState => {
-      historyVisible: !prevState.historyVisible
+  handleClick = (index) => {
+    this.setState((prevState, props) => {
+      let newHistoryVisible = Object.assign(prevState.historyVisible, {[index]: !prevState.historyVisible[index]});
+      return {
+        historyVisible: newHistoryVisible
+      }
     })
   };
 
-  renderContainers = (containers) => {
-    return containers.map((container) => {
+  renderHistory = (containerUpdates) => {
+    return containerUpdates.map((update, index) => {
+      return(
+          <Grid.Row key={`update${index}`}>
+            <Grid.Column>
+              <Header as="h3">Arrival</Header>
+              {update.get('arrival')}
+            </Grid.Column>
+            <Grid.Column>
+              <Header as="h3">Delivery On</Header>
+              {update.get('delivery_on')}
+            </Grid.Column>
+            <Grid.Column>
+              <Header as="h3">Steamship Line</Header>
+              {update.get('steamship_line')}
+            </Grid.Column>
+            <Grid.Column>
+              <Header as="h3">Origin</Header>
+              {update.get('origin')}
+            </Grid.Column>
+            <Grid.Column>
+              <Header as="h3">Destination</Header>
+              {update.get('destination')}
+            </Grid.Column>
+            <Grid.Column>
+              <Header as="h3">Vessel</Header>
+              {update.get('vessel')}
+            </Grid.Column>
+            <Grid.Column>
+              <Header as="h3">Voyage</Header>
+              {update.get('voyage')}
+            </Grid.Column>
+            <Grid.Column>
+              <Header as="h3">Vessel ETA</Header>
+              {update.get('vessel_eta')}
+            </Grid.Column>
+          </Grid.Row>
+      )
+    })
+  };
+
+  renderContainers = (containers, updates) => {
+    return containers.map((container, idx) => {
+      let containerUpdates = updates.filter((update) => {
+        return update.get('container_number') == container.get('number')
+      });
+
       return (
           <Card fluid color="blue" key={container.get('number')}>
             <Card.Content>
@@ -58,15 +106,14 @@ export default class ContainerDetails extends Component {
             </Card.Content>
             <Card.Content>
               <Accordion>
-                <Accordion.Title active={this.state.visibleHistory} index={0} onClick={this.handleClick}>
+                <Accordion.Title active={this.state.historyVisible[idx]} index={0} onClick={this.handleClick.bind(this, idx)}>
                   <Icon name='dropdown' />
-                  What is a dog?
+                  Container History
                 </Accordion.Title>
-                <Accordion.Content active={this.state.visibleHistory}>
-                  <p>
-                    A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
-                    {' '}welcome guest in many households across the world.
-                  </p>
+                <Accordion.Content active={this.state.historyVisible[idx]}>
+                  <Grid columns={8} divided stackable>
+                    {this.renderHistory(containerUpdates.valueSeq())}
+                  </Grid>
                 </Accordion.Content>
               </Accordion>
             </Card.Content>
@@ -78,12 +125,13 @@ export default class ContainerDetails extends Component {
   render() {
     return (
         <Card.Group>
-          {this.renderContainers(this.props.containers)}
+          {this.renderContainers(this.props.containers, this.props.updates)}
         </Card.Group>
     )
   }
 };
 
 ContainerDetails.propTypes = {
-  containers: PropTypes.object.isRequired
+  containers: PropTypes.object.isRequired,
+  updates: PropTypes.object
 };

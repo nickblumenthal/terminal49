@@ -22,7 +22,10 @@ export default class BookingDetails extends React.Component {
         <Container>
           <Link to="/"><Header as="h1" textAlign="center">Trackster</Header></Link>
           <ShippingDetails booking={this.props.bookings.get(bookingId)}/>
-          <ContainerDetails containers={this.props.bookings.get(bookingId).get('containers')} />
+          <ContainerDetails 
+              containers={this.props.bookings.get(bookingId).get('containers')}
+              updates={this.props.bookings.get(bookingId).get('updates')}
+          />
         </Container>
     );
   }
