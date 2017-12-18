@@ -46,7 +46,7 @@ export default class ContainerDetails extends Component {
               <Grid columns={6} divided stackable>
                 <Grid.Row>
                   <Grid.Column>
-                    <Header as="h3">B/L Number</Header>
+                    <Header as="h3">Number</Header>
                     {container.get('number')}
                   </Grid.Column>
                   <Grid.Column>
@@ -54,19 +54,19 @@ export default class ContainerDetails extends Component {
                     {container.get('size')}
                   </Grid.Column>
                   <Grid.Column>
-                    <Header as="h3">Origin</Header>
+                    <Header as="h3">Type</Header>
                     {container.get('type')}
                   </Grid.Column>
                   <Grid.Column>
-                    <Header as="h3">Destination</Header>
-                    {container.get('last_status')}
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Header as="h3">Destination</Header>
+                    <Header as="h3">Location</Header>
                     {container.get('location')}
                   </Grid.Column>
                   <Grid.Column>
-                    <Header as="h3">Destination</Header>
+                    <Header as="h3">Last Status</Header>
+                    {container.get('last_status')}
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Header as="h3">Last Status At</Header>
                     {container.get('last_status_at')}
                   </Grid.Column>
                 </Grid.Row>
