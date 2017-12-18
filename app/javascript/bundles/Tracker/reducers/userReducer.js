@@ -33,10 +33,11 @@ export default function users(state = initialState, action = {}) {
     case (User.RECEIVE_LOGIN):
       return state.merge({
         isFetching: false,
-        isLoggedIn: true,
+        isLoggedIn: action.data.errors ? false : true,
         currentUser: {
           email: action.data.email
         },
+        errors: Immutable.fromJS(action.data.errors),
         searchHistory: action.data.search_history || []
       });
     case (User.RECEIVE_LOGOUT):

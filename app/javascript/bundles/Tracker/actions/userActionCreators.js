@@ -117,10 +117,15 @@ export function receiveSignUp(data) {
 }
 
 export function receiveLogin(data) {
+  let errors = undefined;
+  if(data.error) {
+    errors = {"Login": [data.error]};
+  }
   return {
     type: User.RECEIVE_LOGIN,
     data: {
       email: data.email,
+      errors: errors
     }
   }
 }

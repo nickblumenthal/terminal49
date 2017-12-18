@@ -60,7 +60,7 @@ export default class AppHeader extends React.Component {
                 <label>Email</label>
                 <input placeholder='Email' name="email" onChange={this.handleChange} />
               </Form.Field>
-              <Form.Field>
+              <Form.Field error={errors && errors.has('password')}>
                 <label>Password</label>
                 <input placeholder='password' name="password" onChange={this.handleChange}/>
               </Form.Field>
@@ -87,16 +87,27 @@ export default class AppHeader extends React.Component {
       return;
     }
 
+    let errors = this.props.user.get('errors');
+
+    const printErrors = (errors) => {
+      if(errors == undefined) { return; }
+      return errors.map((errorMessages, field) => {
+        return (<div>{field}: {errorMessages.toJS().join()}</div>)
+      }).toList()
+    };
+
     return (
         <Modal trigger={<Button color="green">Login</Button>}>
           <Modal.Header textAlign="center">Login</Modal.Header>
           <Modal.Content>
-            <Form onSubmit={this.handleLoginSubmit} success={this.props.user.get('isLoggedIn')}>
-              <Form.Field>
+            <Form onSubmit={this.handleLoginSubmit} 
+                  success={this.props.user.get('isLoggedIn')}
+                  error={errors != undefined}>
+              <Form.Field error={errors && errors.has('email')}>
                 <label>Email</label>
                 <input placeholder='Email' name="email" onChange={this.handleChange}/>
               </Form.Field>
-              <Form.Field>
+              <Form.Field error={errors && errors.has('password')}>
                 <label>Password</label>
                 <input placeholder='password' name="password" onChange={this.handleChange}/>
               </Form.Field>
@@ -106,6 +117,12 @@ export default class AppHeader extends React.Component {
                   header='Form Completed'
                   content="Welcome to back!"
               />
+              <Message error>
+                <Message.Header>Error</Message.Header>
+                <Message.Content>
+                  {printErrors(errors)}
+                </Message.Content>
+              </Message>
             </Form>
           </Modal.Content>
         </Modal>
