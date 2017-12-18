@@ -19,7 +19,7 @@ export default class SearchHistory extends React.Component {
     const searches = this.props.user.get('searchHistory');
     return searches.map((search) => {
       return(
-          <Dropdown.Item>
+          <Dropdown.Item key={`search${search.get('search')}`}>
             <Link to={`/bookings/${search.get('search')}`}>{search.get('search')}</Link>
           </Dropdown.Item>
       )
