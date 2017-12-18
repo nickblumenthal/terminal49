@@ -34,7 +34,7 @@ export default class SearchHistory extends React.Component {
     }
 
     return(
-        <Dropdown text="Search History">
+        <Dropdown text="Search History" style={{marginRight: "10px"}}>
           <Dropdown.Menu>
             <Dropdown.Item>
               <div onClick={this.props.sendClearSearchHistory}>Clear All</div>
