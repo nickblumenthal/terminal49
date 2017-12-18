@@ -35,6 +35,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'bcrypt'
 gem 'devise'
 gem 'faraday'
 gem 'react_on_rails', '10.0.2'

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => {sessions: 'sessions', registrations: 'users'}
   resources :bookings, only: [:show]
   resources :users do
     resources :user_search_histories

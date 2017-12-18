@@ -18,11 +18,4 @@ class BookingsController < ApplicationController
       format.json { render json: @booking}
     end
   end
-
-  private
-
-  def hydrate_store
-    props = {}
-    redux_store("trackerStore", props: {name: 'test'})
-  end
 end

@@ -12,6 +12,11 @@ class PagesController < ApplicationController
   private
 
   def hydrate_store
-    redux_store("trackerStore", props: {})
+    redux_store("trackerStore", props: {
+      userReducer: {
+        currentUser: current_user,
+        isLoggedIn: user_signed_in?
+      }
+    })
   end
 end

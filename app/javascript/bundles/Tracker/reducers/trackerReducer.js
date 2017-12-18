@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import { HELLO_WORLD_NAME_UPDATE } from '../constants/trackerConstants';
 import bookingReducer from './bookingReducer'
+import userReducer from './userReducer'
 
-const TrackerReducer = combineReducers({ bookingReducer });
+const TrackerReducer = combineReducers({ bookingReducer, userReducer });
 
 export default TrackerReducer;

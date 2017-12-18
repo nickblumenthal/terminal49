@@ -29,7 +29,6 @@ export default class Tracker extends React.Component {
   render() {
     return (
         <Container>
-          <Header as="h1" textAlign="center">Trackster</Header>
           <Form className="search" onSubmit={this.handleSubmit}>
             <Form.Field>
               <label>Booking Number</label>
