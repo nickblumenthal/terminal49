@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Card, Grid, Header } from 'semantic-ui-react'
 
-const BookingSearchResults = ({bookings, searchHistory, sendRemoveSearch, sendSaveSearch}) => {
+const BookingSearchResults = ({bookings, currentSearch, searchHistory, sendRemoveSearch, sendSaveSearch}) => {
   const renderSaveButton = (booking) => {
     let match = searchHistory.find((search) => {
       return search.get('search') == booking.get('booking_number')
@@ -20,8 +20,10 @@ const BookingSearchResults = ({bookings, searchHistory, sendRemoveSearch, sendSa
   };
 
   const renderCards = (bookings) => {
-    // Get rid of an empty results
-    const validBookings = bookings.valueSeq().filter(v => v != undefined).toList();
+    // Simple text matching of existing bookings to simulate typeahead style search
+    const validBookings = bookings.valueSeq().filter(v => {
+      return v != undefined && v.get('booking_number').startsWith(currentSearch) && currentSearch != ""
+    }).toList();
 
     if(bookings.size > 0 && validBookings.size == undefined) {
       return (
