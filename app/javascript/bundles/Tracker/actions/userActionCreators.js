@@ -27,6 +27,45 @@ export function sendLogin(email, password) {
   }
 }
 
+export function sendLogout() {
+  return function(dispatch) {
+    fetch(`/users/sign_out`, {
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      method: 'DELETE'
+    })
+        .then((response) => {
+          if(response.status == 204) {
+            dispatch(receiveLogout())
+          } else {
+            console.log(response.status)
+          }
+        })
+  }
+}
+
+export function sendSaveSearch(blId) {
+  return function(dispatch) {
+    fetch(`/user/user_search_histories`, {
+      body: JSON.stringify({user_search_history: {bl_id: blId}}),
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      method: 'POST'
+    })
+        .then((response) => response.json())
+        .then((data) => dispatch(receiveSaveSearch(data)))
+  }
+}
+
+export function fetchSearchHistory() {
+  return function(dispatch) {
+    fetch(`/user/user_search_histories`, {
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+    })
+        .then((response) => response.json())
+        .then((data) => dispatch(receiveSearchHistory(data)))
+  }
+}
+
+
 export function postSignUp(email, password) {
   return {
     type: User.POST_SIGNUP,
@@ -58,9 +97,30 @@ export function receiveSignUp(data) {
 
 export function receiveLogin(data) {
   return {
-    type: User.RECEIVE_SIGNUP,
+    type: User.RECEIVE_LOGIN,
     data: {
       email: data.email,
     }
+  }
+}
+
+export function receiveLogout(data) {
+  return {
+    type: User.RECEIVE_LOGOUT,
+    data: {}
+  }
+}
+
+export function receiveSearchHistory(data) {
+  return {
+    type: User.RECEIVE_SEARCH_HISTORY,
+    data: data
+  }
+}
+
+export function receiveSaveSearch(data) {
+  return {
+    type: User.RECEIVE_SAVE_SEARCH,
+    data: data
   }
 }

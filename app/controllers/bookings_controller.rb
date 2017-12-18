@@ -12,10 +12,21 @@ class BookingsController < ApplicationController
             bookings: {
               bl_id => @booking.as_json
             }
+          },
+          userReducer: {
+            currentUser: current_user,
+            isLoggedIn: user_signed_in?,
+            searchHistory: search_history
           }
         })
       end
       format.json { render json: @booking}
     end
+  end
+
+  private
+
+  def search_history
+    user_signed_in? ? current_user.user_search_histories.as_json : []
   end
 end

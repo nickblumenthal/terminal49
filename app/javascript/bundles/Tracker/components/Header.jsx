@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {Button, Container, Form, Grid, Header, Message, Modal} from 'semantic-ui-react'
+import {Button, Container, Dropdown, Form, Grid, Header, Message, Modal} from 'semantic-ui-react'
 import {Link, Route, Switch} from 'react-router-dom'
 
-import TrackerContainer from '../containers/TrackerContainer'
 import BookingDetailContainer from '../containers/BookingDetailContainer'
+import TrackerContainer from '../containers/TrackerContainer'
+import SearchHistory from '../components/SearchHistory'
 
 export default class AppHeader extends React.Component {
   static propTypes = {};
@@ -43,7 +44,7 @@ export default class AppHeader extends React.Component {
         <Modal trigger={<Button color="blue">Sign Up</Button>}>
           <Modal.Header textAlign="center">Sign Up</Modal.Header>
           <Modal.Content>
-            <Form onSubmit={this.handleSignUpSubmit} success={this.props.user.get('currentUser').get('email') == this.state.email}>
+            <Form onSubmit={this.handleSignUpSubmit} success={this.props.user.get('isLoggedIn')}>
               <Form.Field>
                 <label>Email</label>
                 <input placeholder='Email' name="email" onChange={this.handleChange}/>
@@ -74,7 +75,7 @@ export default class AppHeader extends React.Component {
         <Modal trigger={<Button color="green">Login</Button>}>
           <Modal.Header textAlign="center">Login</Modal.Header>
           <Modal.Content>
-            <Form onSubmit={this.handleLoginSubmit} success={this.props.user.get('currentUser').get('email') == this.state.email}>
+            <Form onSubmit={this.handleLoginSubmit} success={this.props.user.get('isLoggedIn')}>
               <Form.Field>
                 <label>Email</label>
                 <input placeholder='Email' name="email" onChange={this.handleChange}/>
@@ -96,8 +97,38 @@ export default class AppHeader extends React.Component {
   };
 
   renderSearchHistory = () => {
+    if(!this.props.user.get('isLoggedIn')) {
+      return;
+    }
+
     return(
-        <div>hi</div>
+        <Dropdown text="Search History">
+          <Dropdown.Menu>
+            <Dropdown.Item>
+              <Link to="/">Clear All</Link>
+            </Dropdown.Item>
+            {this.renderSearches()}
+          </Dropdown.Menu>
+        </Dropdown>
+    )
+  };
+
+  renderSearches = () => {
+    const searches = this.props.user.get('searchHistory');
+    return searches.map((search) => {
+      return(
+          <Dropdown.Item>
+            <Link to={`/bookings/${search.get('search')}`}>{search.get('search')}</Link>
+          </Dropdown.Item>
+      )
+    })
+  };
+  
+  renderLogout = () => {
+    if(!this.props.user.get('isLoggedIn')) { return; }
+    
+    return(
+        <Button color="red" onClick={this.props.sendLogout}>Logout</Button>
     )
   };
 
@@ -114,7 +145,8 @@ export default class AppHeader extends React.Component {
               <Grid.Column textAlign="right">
                 {this.renderSignUp()}
                 {this.renderLogin()}
-                {this.renderSearchHistory()}
+                <SearchHistory user={this.props.user} fetchSearchHistory={this.props.fetchSearchHistory} />
+                {this.renderLogout()}
               </Grid.Column>
             </Grid.Row>
           </Grid>

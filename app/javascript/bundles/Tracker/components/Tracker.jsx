@@ -36,7 +36,7 @@ export default class Tracker extends React.Component {
             </Form.Field>
             <Button type='submit'>Search</Button>
           </Form>
-          <BookingSearchResults bookings={this.props.bookings}/>
+          <BookingSearchResults bookings={this.props.bookings} searchHistory={this.props.searchHistory} sendSaveSearch={this.props.sendSaveSearch}/>
         </Container>
     );
   }

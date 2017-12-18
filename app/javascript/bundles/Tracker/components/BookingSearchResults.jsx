@@ -1,8 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Card, Grid, Header } from 'semantic-ui-react'
+import { Button, Card, Grid, Header } from 'semantic-ui-react'
 
-const BookingSearchResults = ({bookings}) => {
+const BookingSearchResults = ({bookings, searchHistory, sendSaveSearch}) => {
+  const renderSaveButton = (booking) => {
+    if(searchHistory.find((search) => search.get('search') == booking.get('booking_number'))) {
+      return (<div>Saved</div>)
+    } else {
+      return (
+        <Button onClick={sendSaveSearch.bind(null, booking.get('booking_number'))}>Save</Button>
+      )
+    }
+  };
+
   const renderCards = (bookings) => {
     // Get rid of an empty results
     const validBookings = bookings.valueSeq().filter(v => v != undefined).toList();
@@ -41,9 +51,12 @@ const BookingSearchResults = ({bookings}) => {
                       {booking.get('destination')}
                     </Grid.Column>
                     <Grid.Column>
-                      <Link to={`/bookings/${booking.get('booking_number')}`}>
-                        View Detail
-                      </Link>
+                      <Button>
+                        <Link to={`/bookings/${booking.get('booking_number')}`}>
+                          View Detail
+                        </Link>
+                      </Button>
+                      {renderSaveButton(booking)}
                     </Grid.Column>
                   </Grid.Row>
                 </Grid>
