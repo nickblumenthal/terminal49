@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {Button, Container, Form, Header} from 'semantic-ui-react'
+import {Button, Container, Form, Grid} from 'semantic-ui-react'
 import BookingSearchResults from './BookingSearchResults'
 
 export default class Tracker extends React.Component {
@@ -29,18 +29,28 @@ export default class Tracker extends React.Component {
   render() {
     return (
         <Container>
-          <Form className="search" onSubmit={this.handleSubmit}>
-            <Form.Field>
-              <label>Booking Number</label>
-              <input placeholder='Booking Number' name="bookingNumber" onChange={this.handleChange}/>
-            </Form.Field>
-            <Button type='submit'>Search</Button>
-          </Form>
-          <BookingSearchResults bookings={this.props.bookings} 
-                                currentSearch={this.state.bookingNumber}
-                                searchHistory={this.props.searchHistory}
-                                sendRemoveSearch={this.props.sendRemoveSearch}
-                                sendSaveSearch={this.props.sendSaveSearch}/>
+          <Grid columns={1} padded>
+            <Grid.Row>
+              <Grid.Column>
+              <Form className="search" onSubmit={this.handleSubmit}>
+                <Form.Field>
+                  <label>Booking Number</label>
+                  <input placeholder='Booking Number' name="bookingNumber" onChange={this.handleChange}/>
+                </Form.Field>
+                <Button type='submit'>Search</Button>
+              </Form>
+                </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column>
+              <BookingSearchResults bookings={this.props.bookings}
+                                    currentSearch={this.state.bookingNumber}
+                                    searchHistory={this.props.searchHistory}
+                                    sendRemoveSearch={this.props.sendRemoveSearch}
+                                    sendSaveSearch={this.props.sendSaveSearch}/>
+                </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Container>
     );
   }

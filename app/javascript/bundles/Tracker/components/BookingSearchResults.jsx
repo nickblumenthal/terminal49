@@ -41,7 +41,7 @@ const BookingSearchResults = ({bookings, currentSearch, searchHistory, sendRemov
                 <Header as="h2">Booking Detail</Header>
               </Card.Header>
               <Card.Content>
-                <Grid columns={5} divided stackable>
+                <Grid columns={5} divided stackable padded>
                   <Grid.Row>
                     <Grid.Column>
                       <Header as="h2">B/L Number</Header>
@@ -62,7 +62,7 @@ const BookingSearchResults = ({bookings, currentSearch, searchHistory, sendRemov
                     <Grid.Column>
                       <Button>
                         <Link to={`/bookings/${booking.get('booking_number')}`}>
-                          View Detail
+                          Detail
                         </Link>
                       </Button>
                       {renderSaveButton(booking)}

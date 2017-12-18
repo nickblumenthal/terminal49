@@ -135,7 +135,7 @@ export default class AppHeader extends React.Component {
   render() {
     return (
         <Container>
-          <Grid columns={3}>
+          <Grid columns={3} padded>
             <Grid.Row>
               <Grid.Column>
               </Grid.Column>
