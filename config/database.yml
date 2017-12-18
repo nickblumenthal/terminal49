@@ -14,4 +14,4 @@ production:
   <<: *default
   database: trackster_production
   username: trackster
-  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
+  password: <%= ENV['TRACKSTER_DATABASE_PASSWORD'] %>
