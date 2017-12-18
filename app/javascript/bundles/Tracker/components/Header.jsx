@@ -145,7 +145,7 @@ export default class AppHeader extends React.Component {
               <Grid.Column textAlign="right">
                 {this.renderSignUp()}
                 {this.renderLogin()}
-                <SearchHistory user={this.props.user} fetchSearchHistory={this.props.fetchSearchHistory} />
+                <SearchHistory user={this.props.user} fetchSearchHistory={this.props.fetchSearchHistory} sendClearSearchHistory={this.props.sendClearSearchHistory}/>
                 {this.renderLogout()}
               </Grid.Column>
             </Grid.Row>

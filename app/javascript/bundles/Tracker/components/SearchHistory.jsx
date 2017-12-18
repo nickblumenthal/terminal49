@@ -37,7 +37,7 @@ export default class SearchHistory extends React.Component {
         <Dropdown text="Search History">
           <Dropdown.Menu>
             <Dropdown.Item>
-              <Link to="/">Clear All</Link>
+              <div onClick={this.props.sendClearSearchHistory}>Clear All</div>
             </Dropdown.Item>
             {this.renderSearches()}
           </Dropdown.Menu>

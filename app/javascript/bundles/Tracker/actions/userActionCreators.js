@@ -65,6 +65,26 @@ export function fetchSearchHistory() {
   }
 }
 
+export function sendRemoveSearch(id) {
+  return function(dispatch) {
+    dispatch(receiveRemoveSearch(id));
+    fetch(`/user/user_search_histories/${id}`, {
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      method: 'DELETE'
+    })
+  }
+}
+
+
+export function sendClearSearchHistory() {
+  return function(dispatch) {
+    dispatch(clearHistory());
+    fetch(`/user/users_search_histories/clear`, {
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      method: 'DELETE'
+    })
+  }
+}
 
 export function postSignUp(email, password) {
   return {
@@ -118,9 +138,25 @@ export function receiveSearchHistory(data) {
   }
 }
 
+export function clearHistory() {
+  return {
+    type: User.CLEAR_HISTORY,
+    data: {}
+  }
+}
+
 export function receiveSaveSearch(data) {
   return {
     type: User.RECEIVE_SAVE_SEARCH,
     data: data
   }
 }
+
+export function receiveRemoveSearch(id) {
+  return {
+    type: User.RECEIVE_REMOVE_SEARCH,
+    data: id
+  }
+}
+
+

@@ -1,8 +1,8 @@
 // Simple example of a React "smart" component
 
-import { connect } from 'react-redux';
-import Tracker from '../components/Tracker';
-import * as bookingActions from '../actions/bookingActionCreators';
+import { connect } from 'react-redux'
+import Tracker from '../components/Tracker'
+import * as bookingActions from '../actions/bookingActionCreators'
 import * as userActions from '../actions/userActionCreators'
 
 // Which part of the Redux global state does our component want to receive as props?

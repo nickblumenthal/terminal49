@@ -2,10 +2,16 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Card, Grid, Header } from 'semantic-ui-react'
 
-const BookingSearchResults = ({bookings, searchHistory, sendSaveSearch}) => {
+const BookingSearchResults = ({bookings, searchHistory, sendRemoveSearch, sendSaveSearch}) => {
   const renderSaveButton = (booking) => {
-    if(searchHistory.find((search) => search.get('search') == booking.get('booking_number'))) {
-      return (<div>Saved</div>)
+    let match = searchHistory.find((search) => {
+      return search.get('search') == booking.get('booking_number')
+    });
+
+    if(match) {
+      return (
+          <Button onClick={sendRemoveSearch.bind(null, match.get('id'))}>Remove</Button>
+      )
     } else {
       return (
         <Button onClick={sendSaveSearch.bind(null, booking.get('booking_number'))}>Save</Button>

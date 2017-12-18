@@ -52,6 +52,15 @@ export default function users(state = initialState, action = {}) {
       return state.merge({
         searchHistory: state.get('searchHistory').push(Immutable.fromJS(action.data))
       });
+    case (User.RECEIVE_REMOVE_SEARCH):
+      let idx = state.get('searchHistory').findIndex((search) => search.get('id') == action.data.id);
+      return state.merge({
+        searchHistory: state.get('searchHistory').remove(idx)
+      });
+    case (User.CLEAR_HISTORY):
+      return state.merge({
+        searchHistory: Immutable.fromJS([])
+      });
     default:
       return state;
   }

@@ -10,7 +10,7 @@ class UserSearchHistoriesController < ApplicationController
   end
 
   def destroy
-    render json: current_user.user_search_histories.delete(search_history_params[:id])
+    render json: current_user.user_search_histories.delete(params[:id])
   end
 
   def destroy_all

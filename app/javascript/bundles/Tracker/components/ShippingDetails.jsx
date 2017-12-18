@@ -1,14 +1,31 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import {Card, Grid, Header} from 'semantic-ui-react'
+import {Button, Card, Grid, Header} from 'semantic-ui-react'
 
-const ShippingDetails = ({booking}) => {
+const ShippingDetails = ({booking, searchHistory, sendRemoveSearch, sendSaveSearch}) => {
+  const renderSaveButton = (booking) => {
+    let match = searchHistory.find((search) => {
+      return search.get('search') == booking.get('booking_number')
+    });
+
+    if(match) {
+      return (
+          <Button onClick={sendRemoveSearch.bind(null, match.get('id'))}>Remove</Button>
+      )
+    } else {
+      return (
+          <Button onClick={sendSaveSearch.bind(null, booking.get('booking_number'))}>Save</Button>
+      )
+    }
+  };
+  
   const renderCards = (booking) => {
     return (
         <Card fluid color="red">
           <Card.Content>
             <Card.Header textAlign="center">
               <Header as="h2">Booking Detail</Header>
+              {renderSaveButton(booking)}
             </Card.Header>
           </Card.Content>
           <Card.Content>
