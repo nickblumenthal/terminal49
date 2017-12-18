@@ -111,6 +111,7 @@ export function receiveSignUp(data) {
     type: User.RECEIVE_SIGNUP,
     data: {
       email: data.email,
+      errors: data.errors
     }
   }
 }

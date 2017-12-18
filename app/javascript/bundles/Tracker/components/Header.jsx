@@ -39,26 +39,42 @@ export default class AppHeader extends React.Component {
     if (this.props.user.get('isLoggedIn')) {
       return;
     }
-    
+
+    let errors = this.props.user.get('errors');
+
+    const printErrors = (errors) => {
+      if(errors == undefined) { return; }
+      return errors.map((errorMessages, field) => {
+        return (<div>{field}: {errorMessages.toJS().join()}</div>)
+      }).toList()
+    };
+
     return (
         <Modal trigger={<Button color="blue">Sign Up</Button>}>
           <Modal.Header textAlign="center">Sign Up</Modal.Header>
           <Modal.Content>
-            <Form onSubmit={this.handleSignUpSubmit} success={this.props.user.get('isLoggedIn')}>
-              <Form.Field>
+            <Form onSubmit={this.handleSignUpSubmit}
+                  success={this.props.user.get('isLoggedIn')}
+                  error={errors != undefined}>
+              <Form.Field error={errors && errors.has('email')}>
                 <label>Email</label>
-                <input placeholder='Email' name="email" onChange={this.handleChange}/>
+                <input placeholder='Email' name="email" onChange={this.handleChange} />
               </Form.Field>
               <Form.Field>
                 <label>Password</label>
                 <input placeholder='password' name="password" onChange={this.handleChange}/>
               </Form.Field>
               <Button type='submit'>Submit</Button>
-              <Message
-                  success
-                  header='Form Completed'
-                  content="Welcome to Trackster!  Your search history will now be saved"
+              <Message success
+                       header='Form Completed'
+                       content="Welcome to Trackster!  Your search history will now be saved"
               />
+              <Message error>
+                <Message.Header>Error</Message.Header>
+                <Message.Content>
+                  {printErrors(errors)}
+                </Message.Content>
+              </Message>
             </Form>
           </Modal.Content>
         </Modal>

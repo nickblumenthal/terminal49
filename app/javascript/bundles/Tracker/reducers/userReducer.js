@@ -6,7 +6,8 @@ const initialState = Immutable.fromJS({
   isFetching: false,
   isLoggedIn: false,
   currentUser: {},
-  searchHistory: []
+  searchHistory: [],
+  errors: {}
 });
 
 
@@ -23,10 +24,11 @@ export default function users(state = initialState, action = {}) {
     case (User.RECEIVE_SIGNUP):
       return state.merge({
         isFetching: false,
-        isLoggedIn: true,
+        isLoggedIn: action.data.errors ? false : true,
         currentUser: {
           email: action.data.email
-        }
+        },
+        errors: Immutable.fromJS(action.data.errors)
       });
     case (User.RECEIVE_LOGIN):
       return state.merge({
