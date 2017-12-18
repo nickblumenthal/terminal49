@@ -88,6 +88,8 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     libv8 (5.9.211.38.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -241,6 +243,7 @@ DEPENDENCIES
   faraday
   foreman
   jbuilder (~> 2.5)
+  launchy
   listen (>= 3.0.5, < 3.2)
   mini_racer
   pg

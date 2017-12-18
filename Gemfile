@@ -50,6 +50,7 @@ group :development, :test do
   gem 'foreman'
   gem 'poltergeist'
   gem 'rspec-rails'
+  gem 'launchy'
 end
 
 group :development do

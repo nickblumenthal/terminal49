@@ -25,7 +25,8 @@ const BookingSearchResults = ({bookings, currentSearch, searchHistory, sendRemov
       return v != undefined && v.get('booking_number').startsWith(currentSearch) && currentSearch != ""
     }).toList();
 
-    if(bookings.size > 0 && validBookings.size == undefined) {
+    // Show no results if a search has been performed, but nothing was returned
+    if(currentSearch != "" && bookings.has(currentSearch) && bookings.get(currentSearch) == null) {
       return (
           <Card fluid color="orange">
             <Header as="h2">No results</Header>
