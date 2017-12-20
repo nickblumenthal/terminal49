@@ -1,12 +1,17 @@
 import fetch from 'cross-fetch'
 import User from '../constants/userConstants'
+import {getCsrfToken, writeCsrfToken} from '../utils/getCsrfToken'
 
 export function sendSignUp(email, password) {
   return function(dispatch) {
     dispatch(postSignUp(email, password));
     fetch(`/users`, {
       body: JSON.stringify({user: {email: email, password: password}}),
-      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': getCsrfToken()
+      },
       method: 'POST'
     })
         .then((response) => response.json())
@@ -19,27 +24,32 @@ export function sendLogin(email, password) {
     dispatch(postLogin(email, password));
     fetch(`/users/sign_in`, {
       body: JSON.stringify({user: {email: email, password: password}}),
-      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json', 'X-CSRF-Token': getCsrfToken()},
       method: 'POST'
     })
         .then((response) => response.json())
-        .then((data) => dispatch(receiveLogin(data)))
+        .then((data) => {
+          dispatch(receiveLogin(data));
+          writeCsrfToken(data.csrf_token);
+        })
   }
 }
 
 export function sendLogout() {
   return function(dispatch) {
     fetch(`/users/sign_out`, {
-      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json', 'X-CSRF-Token': getCsrfToken()},
       method: 'DELETE'
     })
         .then((response) => {
-          if(response.status == 204) {
-            dispatch(receiveLogout())
+          if(response.status == 200) {
+            dispatch(receiveLogout());
+            return response.json();
           } else {
             console.log(response.status)
           }
         })
+        .then((data) => writeCsrfToken(data.csrf_token))
   }
 }
 
@@ -47,7 +57,7 @@ export function sendSaveSearch(blId) {
   return function(dispatch) {
     fetch(`/user/user_search_histories`, {
       body: JSON.stringify({user_search_history: {bl_id: blId}}),
-      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json', 'X-CSRF-Token': getCsrfToken()},
       method: 'POST'
     })
         .then((response) => response.json())
@@ -58,7 +68,7 @@ export function sendSaveSearch(blId) {
 export function fetchSearchHistory() {
   return function(dispatch) {
     fetch(`/user/user_search_histories`, {
-      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json', 'X-CSRF-Token': getCsrfToken()},
     })
         .then((response) => response.json())
         .then((data) => dispatch(receiveSearchHistory(data)))
@@ -69,7 +79,7 @@ export function sendRemoveSearch(id) {
   return function(dispatch) {
     dispatch(receiveRemoveSearch(id));
     fetch(`/user/user_search_histories/${id}`, {
-      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json', 'X-CSRF-Token': getCsrfToken()},
       method: 'DELETE'
     })
   }
@@ -80,7 +90,7 @@ export function sendClearSearchHistory() {
   return function(dispatch) {
     dispatch(clearHistory());
     fetch(`/user/users_search_histories/clear`, {
-      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json', 'X-CSRF-Token': getCsrfToken()},
       method: 'DELETE'
     })
   }

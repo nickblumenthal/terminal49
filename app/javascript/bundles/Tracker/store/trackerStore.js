@@ -13,7 +13,6 @@ const makeImmutable = (priorState) => {
   Object.keys(priorState).map((key, index) => {
     priorState[key] = Immutable.fromJS(priorState[key])
   });
-  console.log(priorState);
   return priorState;
 };
 

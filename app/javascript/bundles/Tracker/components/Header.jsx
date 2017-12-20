@@ -51,7 +51,7 @@ export default class AppHeader extends React.Component {
 
     return (
         <Modal trigger={<Button color="blue">Sign Up</Button>}>
-          <Modal.Header textAlign="center">Sign Up</Modal.Header>
+          <Modal.Header>Sign Up</Modal.Header>
           <Modal.Content>
             <Form onSubmit={this.handleSignUpSubmit}
                   success={this.props.user.get('isLoggedIn')}
@@ -98,7 +98,7 @@ export default class AppHeader extends React.Component {
 
     return (
         <Modal trigger={<Button color="green">Login</Button>}>
-          <Modal.Header textAlign="center">Login</Modal.Header>
+          <Modal.Header>Login</Modal.Header>
           <Modal.Content>
             <Form onSubmit={this.handleLoginSubmit} 
                   success={this.props.user.get('isLoggedIn')}
