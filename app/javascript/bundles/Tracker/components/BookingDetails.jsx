@@ -36,6 +36,7 @@ export default class BookingDetails extends React.Component {
     return (
         <Container>
           <ShippingDetails booking={this.props.bookings.get(this.bookingId)}
+                           isLoggedIn={this.props.isLoggedIn}
                            searchHistory={this.props.searchHistory}
                            sendRemoveSearch={this.props.sendRemoveSearch} 
                            sendSaveSearch={this.props.sendSaveSearch}/>

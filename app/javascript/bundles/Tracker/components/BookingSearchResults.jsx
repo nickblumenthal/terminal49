@@ -1,9 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Card, Grid, Header } from 'semantic-ui-react'
+import { Button, Card, Grid, Header, Modal } from 'semantic-ui-react'
 
-const BookingSearchResults = ({bookings, currentSearch, searchHistory, sendRemoveSearch, sendSaveSearch}) => {
+const BookingSearchResults = ({bookings, currentSearch, isLoggedIn, searchHistory, sendRemoveSearch, sendSaveSearch}) => {
   const renderSaveButton = (booking) => {
+    if(!isLoggedIn) {
+      return(
+          <Modal header="Login to save"
+                 content="Please login to retain your search history"
+                 trigger={<Button>Save</Button>} />
+      );
+    }
     let match = searchHistory.find((search) => {
       return search.get('search') == booking.get('booking_number')
     });
@@ -60,11 +67,11 @@ const BookingSearchResults = ({bookings, currentSearch, searchHistory, sendRemov
                       {booking.get('destination')}
                     </Grid.Column>
                     <Grid.Column>
-                      <Button>
-                        <Link to={`/bookings/${booking.get('booking_number')}`}>
-                          Detail
-                        </Link>
-                      </Button>
+                      <Link to={`/bookings/${booking.get('booking_number')}`}>
+                        <Button>
+                            Detail
+                        </Button>
+                      </Link>
                       {renderSaveButton(booking)}
                     </Grid.Column>
                   </Grid.Row>

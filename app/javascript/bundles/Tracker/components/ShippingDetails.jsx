@@ -1,9 +1,17 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import {Button, Card, Grid, Header} from 'semantic-ui-react'
+import {Button, Card, Grid, Header, Modal} from 'semantic-ui-react'
 
-const ShippingDetails = ({booking, searchHistory, sendRemoveSearch, sendSaveSearch}) => {
+const ShippingDetails = ({booking, isLoggedIn, searchHistory, sendRemoveSearch, sendSaveSearch}) => {
   const renderSaveButton = (booking) => {
+    if(!isLoggedIn) {
+      return(
+          <Modal header="Login to save"
+                 content="Please login to retain your search history"
+                 trigger={<Button>Save</Button>} />
+      );
+    }
+
     let match = searchHistory.find((search) => {
       return search.get('search') == booking.get('booking_number')
     });

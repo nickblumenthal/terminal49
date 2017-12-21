@@ -45,6 +45,7 @@ export default class Tracker extends React.Component {
               <Grid.Column>
               <BookingSearchResults bookings={this.props.bookings}
                                     currentSearch={this.state.bookingNumber}
+                                    isLoggedIn={this.props.isLoggedIn}
                                     searchHistory={this.props.searchHistory}
                                     sendRemoveSearch={this.props.sendRemoveSearch}
                                     sendSaveSearch={this.props.sendSaveSearch}/>
